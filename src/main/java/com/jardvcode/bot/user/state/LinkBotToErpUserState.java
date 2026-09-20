@@ -33,6 +33,6 @@ public final class LinkBotToErpUserState implements State {
             return Decision.moveTo(getClass());
         }
 
-        return Decision.moveTo(WelcomeState.class);
+        return Decision.moveTo(HelpState.class);
     }
 }

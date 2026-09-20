@@ -56,7 +56,7 @@ class LinkBotToErpUserStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(service, times(1)).linkBotToErpUser(any(), any());
-        assertEquals(WelcomeState.class, decision.nextState());
+        assertEquals(HelpState.class, decision.nextState());
     }
 
 }
