@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class BotErpUserLinkService {
 
@@ -25,8 +27,10 @@ public class BotErpUserLinkService {
     }
 
     @Transactional
-    public void linkBotToErpUser(String token, String providerUserId) {
+    public void linkBotToErpUser(String tokenString, String providerUserId) {
         try {
+            UUID token = ensureValidUUID(tokenString);
+
             BotActivationTokenEntity botActivationToken = botActivationTokenRepository.findByToken(token).orElseThrow(() -> new BotException("No se pudo encontrar el token de acceso."));
 
             if (!botActivationToken.isValidToken()) {
@@ -45,6 +49,14 @@ public class BotErpUserLinkService {
         } catch(Exception e) {
             LOGGER.error("Unexpected error processing token for providerUserId={}", providerUserId, e);
             throw new UnexpectedException();
+        }
+    }
+
+    public static UUID ensureValidUUID(String tokenString) {
+        try {
+            return UUID.fromString(tokenString);
+        } catch (Exception e) {
+            throw new BotException("El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.");
         }
     }
 

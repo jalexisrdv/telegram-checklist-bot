@@ -37,7 +37,7 @@ class BotErpUserLinkServiceTest {
         when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotToErpUser("token", "platformUserId");
+            service.linkBotToErpUser("550e8400-e29b-41d4-a716-446655440000", "platformUserId");
         });
 
         assertEquals( "No se pudo encontrar el token de acceso.", exception.getMessage());
@@ -45,10 +45,12 @@ class BotErpUserLinkServiceTest {
 
     @Test
     void shouldThrowExceptionWhenTokenIsUsed() {
-        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(BotActivationTokenEntityMother.withUsedToken()));
+        BotActivationTokenEntity entity = BotActivationTokenEntityMother.withUsedToken();
+
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(entity));
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotToErpUser("token", "platformUserId");
+            service.linkBotToErpUser(entity.getToken().toString(), "platformUserId");
         });
 
         assertEquals( "El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.", exception.getMessage());
@@ -56,10 +58,12 @@ class BotErpUserLinkServiceTest {
 
     @Test
     void shouldThrowExceptionWhenTokenIsExpired() {
-        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(BotActivationTokenEntityMother.withExpiredToken()));
+        BotActivationTokenEntity entity = BotActivationTokenEntityMother.withExpiredToken();
+
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(entity));
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotToErpUser("token", "platformUserId");
+            service.linkBotToErpUser(entity.getToken().toString(), "platformUserId");
         });
 
         assertEquals( "El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.", exception.getMessage());
@@ -67,11 +71,13 @@ class BotErpUserLinkServiceTest {
 
     @Test
     void shouldThrowExceptionWhenUserIsNotFound() {
-        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(BotActivationTokenEntityMother.withValidToken()));
+        BotActivationTokenEntity entity = BotActivationTokenEntityMother.withValidToken();
+
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(entity));
         when(botUserRepository.findByProviderUserId(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotToErpUser("token", "platformUserId");
+            service.linkBotToErpUser(entity.getToken().toString(), "platformUserId");
         });
 
         assertEquals( "Usuario no encontrado.", exception.getMessage());
@@ -88,7 +94,7 @@ class BotErpUserLinkServiceTest {
         when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(botActivationToken));
         when(botUserRepository.findByProviderUserId(any())).thenReturn(Optional.of(botUser));
 
-        service.linkBotToErpUser("token", "platformUserId");
+        service.linkBotToErpUser(botActivationToken.getToken().toString(), "platformUserId");
 
         verify(botActivationTokenRepository, times(1)).save(botActivationTokenCaptor.capture());
         verify(botUserRepository, times(1)).save(botUserCaptor.capture());

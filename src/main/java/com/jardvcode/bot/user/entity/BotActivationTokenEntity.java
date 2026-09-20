@@ -3,6 +3,7 @@ package com.jardvcode.bot.user.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bot_activation_tokens")
@@ -16,7 +17,7 @@ public class BotActivationTokenEntity {
     private Long userId;
 
     @Column(name = "token")
-    private String token;
+    private UUID token;
 
     @Column(name = "expires_at")
     private LocalDateTime expiresAt;
@@ -48,11 +49,11 @@ public class BotActivationTokenEntity {
         this.userId = userId;
     }
 
-    public String getToken() {
+    public UUID getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(UUID token) {
         this.token = token;
     }
 

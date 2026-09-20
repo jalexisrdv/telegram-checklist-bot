@@ -5,7 +5,7 @@ DROP TABLE bot_activation_tokens;
 CREATE TABLE bot_activation_tokens (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    token VARCHAR(50) NOT NULL,
+    token UUID NOT NULL,
     expires_at TIMESTAMP NOT NULL,
     used_at TIMESTAMP NULL,
 
