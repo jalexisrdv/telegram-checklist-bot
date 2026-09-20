@@ -126,6 +126,14 @@ public class BotUserEntity {
         this.providerUserId = providerUserId;
     }
 
+    public String getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(String previousState) {
+        this.previousState = previousState;
+    }
+
     public String getCurrentState() {
         return currentState;
     }

@@ -54,7 +54,7 @@ public final class StateMachine {
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
 			botUser.updateCurrentState(initialState);
-			repository.save(botUser);
+			repository.updateStateByProviderUserId(botUser.getPreviousState(), botUser.getCurrentState(), botUser.getProviderUserId());
 			
 			return;
 		}
@@ -81,6 +81,6 @@ public final class StateMachine {
 		stateRegistry.find(nextState).onBotMessage(botContext);
 
 		botUser.updateCurrentState(nextState);
-		repository.save(botUser);
+		repository.updateStateByProviderUserId(botUser.getPreviousState(), botUser.getCurrentState(), botUser.getProviderUserId());
 	}
 }
