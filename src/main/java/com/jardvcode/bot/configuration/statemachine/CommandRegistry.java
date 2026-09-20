@@ -6,6 +6,7 @@ import com.jardvcode.bot.checklist.state.SelectAssignmentState;
 import com.jardvcode.bot.checklist.state.SelectSectionState;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.State;
+import com.jardvcode.bot.user.state.WelcomeState;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -39,6 +40,7 @@ public final class CommandRegistry {
     private HashMap<String, Command> load() {
         HashMap<String, Command> commands = new HashMap<>();
 
+        commands.put(BotCommand.GUIDE.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", WelcomeState.class));
         commands.put(BotCommand.OVERVIEW.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", AssignmentOverviewState.class));
         commands.put(BotCommand.ASSIGNMENTS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectAssignmentState.class));
         commands.put(BotCommand.SECTIONS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectSectionState.class));
