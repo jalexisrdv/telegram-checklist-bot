@@ -11,13 +11,14 @@ public final class WelcomeState implements State {
     public void onBotMessage(BotContext botContext) throws Exception {
         String message = """
                 ¡Hola! 👋\s
-                Bienvenido al bot de inspecciones. Todo lo que necesitas para tus inspecciones está aquí:\s
                 
-                📋 /listas – Mira tus listas de inspección\s
-                👥 /grupos – Revisa los grupos de tu lista\s
-                📄 /reportes – Genera reportes\s
+                Bienvenido al sistema de inspecciones de mantenimiento:\s
                 
-                ¡Elige una opción y empecemos! 🚀
+                📋 /a – Ver y seleccionar una inspección asignada\s
+                📂 /s – Ver secciones e ingresar a responder los puntos de la inspección seleccionada\s
+                📄 /o – Ver el avance y resumen de la inspección seleccionada\s
+                
+                ¡Presiona o escribe /a para elegir tu inspección y comenzar! 🚗🔧
                 """;
 
         botContext.sendText(message);
