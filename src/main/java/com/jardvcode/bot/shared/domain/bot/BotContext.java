@@ -8,6 +8,7 @@ import java.util.List;
 public final class BotContext {
 	
 	private Long systemUserId;
+	private Long botUserId;
 	private final String platform;
 	private final String providerUserId;
 	private final String message;
@@ -39,6 +40,14 @@ public final class BotContext {
 
 	public void setSystemUserId(Long systemUserId) {
 		this.systemUserId = systemUserId;
+	}
+
+	public Long getBotUserId() {
+		return botUserId;
+	}
+
+	public void setBotUserId(Long botUserId) {
+		this.botUserId = botUserId;
 	}
 
 	public String getPlatform() {

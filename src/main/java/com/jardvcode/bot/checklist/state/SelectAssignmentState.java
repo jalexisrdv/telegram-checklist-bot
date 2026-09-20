@@ -77,7 +77,7 @@ public final class SelectAssignmentState implements State {
                 assignment.getOperatorFullName(), assignment.getMileage(), assignment.getNextService()
         );
 
-        sessionDataService.save(botContext.getSystemUserId(), assignmentDTO, getClass());
+        sessionDataService.save(botContext.getBotUserId(), assignmentDTO, getClass());
 
         return Decision.moveTo(SelectSectionState.class);
     }

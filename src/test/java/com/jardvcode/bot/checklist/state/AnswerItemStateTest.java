@@ -42,11 +42,11 @@ class AnswerItemStateTest {
     @Test
     void shouldSendStatusMessageWhenItemSelected() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long mechanicUserId = 1L;
+        Long botUserId = 1L;
         ItemDTO dto = ItemDTOMother.create();
 
-        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(sessionDataService.findByBotUserId(mechanicUserId, ItemDTO.class)).thenReturn(dto);
+        when(botContext.getBotUserId()).thenReturn(botUserId);
+        when(sessionDataService.findByBotUserId(botUserId, ItemDTO.class)).thenReturn(dto);
         state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());
@@ -69,14 +69,14 @@ class AnswerItemStateTest {
     @Test
     void shouldPersistStatusWhenInputIsCorrect() throws Exception {
         String message = "ok en condiciones";
-        Long mechanicUserId = 1L;
+        Long botUserId = 1L;
         ItemDTO dto = ItemDTOMother.create();
         String status = "ok";
         String comment = "en condiciones";
 
         when(botContext.getMessage()).thenReturn(message);
-        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(sessionDataService.findByBotUserId(mechanicUserId, ItemDTO.class)).thenReturn(dto);
+        when(botContext.getBotUserId()).thenReturn(botUserId);
+        when(sessionDataService.findByBotUserId(botUserId, ItemDTO.class)).thenReturn(dto);
         Decision decision = state.onUserInput(botContext);
 
         verify(assignmentService, times(1)).updateStatus(dto.assignmentId());

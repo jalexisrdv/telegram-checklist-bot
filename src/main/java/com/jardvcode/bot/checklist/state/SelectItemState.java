@@ -28,7 +28,7 @@ public final class SelectItemState implements State {
 
     @Override
     public void onBotMessage(BotContext botContext) throws Exception {
-        SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), SectionDTO.class);
+        SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), SectionDTO.class);
         AssignmentDTO assignmentDTO = sectionDTO.assignmentDTO();
 
         List<ResponseEntity> responses = responseService.findByAssignmentIdAndSectionId(assignmentDTO.assignmentId(), sectionDTO.id());
@@ -59,7 +59,7 @@ public final class SelectItemState implements State {
         try {
             Long optionNumber = Long.valueOf(botContext.getMessage());
 
-            SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), SectionDTO.class);
+            SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), SectionDTO.class);
             AssignmentDTO assignmentDTO = sectionDTO.assignmentDTO();
 
             response = responseService.findByAssignmentIdAndSectionIdAndOptionNumber(assignmentDTO.assignmentId(), sectionDTO.id(), optionNumber);
@@ -71,7 +71,7 @@ public final class SelectItemState implements State {
 
         ItemDTO itemDTO = new ItemDTO(response.getId(), response.getItem().getLabel(), response.getAssignmentId());
 
-        sessionDataService.save(botContext.getSystemUserId(), itemDTO, getClass());
+        sessionDataService.save(botContext.getBotUserId(), itemDTO, getClass());
 
         return Decision.moveTo(AnswerItemState.class);
     }

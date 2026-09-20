@@ -31,7 +31,7 @@ public final class AnswerItemState implements State {
 
     @Override
     public void onBotMessage(BotContext botContext) throws Exception {
-        ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ItemDTO.class);
+        ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), ItemDTO.class);
 
         botContext.sendText("Envía el estatus de " + itemDTO.label().toLowerCase());
     }
@@ -55,7 +55,7 @@ public final class AnswerItemState implements State {
         String status = matcher.group(1).trim();
         String comment = Optional.ofNullable(matcher.group(2)).orElse("").trim();
 
-        ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ItemDTO.class);
+        ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), ItemDTO.class);
 
         responseService.save(itemDTO.id(), status, comment);
 

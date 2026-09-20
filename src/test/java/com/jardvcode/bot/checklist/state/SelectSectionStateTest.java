@@ -60,12 +60,12 @@ class SelectSectionStateTest {
     @Test
     void shouldSendGroupsMessageWhenChecklistSelected() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long mechanicUserId = 1L;
+        Long botUserId = 1L;
         AssignmentDTO dto = AssignmentDTOMother.create();
         List<SectionViewEntity> sections = SectionViewEntityMother.withRandomStatus();
 
-        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenReturn(dto);
+        when(botContext.getBotUserId()).thenReturn(botUserId);
+        when(sessionDataService.findByBotUserId(botUserId, AssignmentDTO.class)).thenReturn(dto);
         when(sectionService.findByAssignmentId(dto.assignmentId())).thenReturn(sections);
         state.onBotMessage(botContext);
 
@@ -90,19 +90,19 @@ class SelectSectionStateTest {
     @Test
     void shouldPersistGroupAndMoveToNextStateWhenOptionIsValid() throws Exception {
         String message = "1";
-        Long mechanicUserId = 1L;
+        Long botUserId = 1L;
         Long optionNumber = 1L;
         AssignmentDTO assignmentDTO = AssignmentDTOMother.create();
         SectionViewEntity section = SectionViewEntityMother.withPendingGroup();
         SectionDTO sectionDTO = SectionDTOMother.create();
 
         when(botContext.getMessage()).thenReturn(message);
-        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenReturn(assignmentDTO);
+        when(botContext.getBotUserId()).thenReturn(botUserId);
+        when(sessionDataService.findByBotUserId(botUserId, AssignmentDTO.class)).thenReturn(assignmentDTO);
         when(sectionService.findByAssignmentIdAndOptionNumber(assignmentDTO.assignmentId(), optionNumber)).thenReturn(section);
         Decision decision = state.onUserInput(botContext);
 
-        verify(sessionDataService, times(1)).save(mechanicUserId, sectionDTO, SelectSectionState.class);
+        verify(sessionDataService, times(1)).save(botUserId, sectionDTO, SelectSectionState.class);
         assertEquals(SelectItemState.class, decision.nextState());
     }
 

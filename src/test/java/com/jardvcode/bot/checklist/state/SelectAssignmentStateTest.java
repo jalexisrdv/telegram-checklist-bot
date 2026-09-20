@@ -82,16 +82,18 @@ class SelectAssignmentStateTest {
     void shouldPersistChecklistAndMoveToNextStateWhenOptionIsValid() throws Exception {
         String message = "1";
         Long mechanicUserId = 1L;
+        Long botUserId = 10L;
         Long optionNumber = 1L;
         AssignmentViewEntity assignment = AssignmentViewEntityMother.withPendingStatus();
         AssignmentDTO dto = AssignmentDTOMother.withInstance(assignment);
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(botContext.getBotUserId()).thenReturn(botUserId);
         when(botContext.getMessage()).thenReturn(message);
         when(assignmentService.findByMechanicUserIdAndOptionNumber(mechanicUserId, optionNumber)).thenReturn(assignment);
         Decision decision = state.onUserInput(botContext);
 
-        verify(sessionDataService, times(1)).save(mechanicUserId, dto, SelectAssignmentState.class);
+        verify(sessionDataService, times(1)).save(botUserId, dto, SelectAssignmentState.class);
         assertEquals(SelectSectionState.class, decision.nextState());
     }
 

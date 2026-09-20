@@ -31,7 +31,7 @@ public final class SelectSectionState implements State {
         AssignmentDTO assignmentDTO = null;
 
         try {
-            assignmentDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), AssignmentDTO.class);
+            assignmentDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), AssignmentDTO.class);
         } catch (Exception e) {
             botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.");
 
@@ -67,7 +67,7 @@ public final class SelectSectionState implements State {
         try {
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
-            assignmentDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), AssignmentDTO.class);
+            assignmentDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), AssignmentDTO.class);
 
             section = sectionService.findByAssignmentIdAndOptionNumber(assignmentDTO.assignmentId(), optionNumber);
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public final class SelectSectionState implements State {
 
         SectionDTO sectionDTO = new SectionDTO(section.getId(), section.getName(), assignmentDTO);
 
-        sessionDataService.save(botContext.getSystemUserId(), sectionDTO, getClass());
+        sessionDataService.save(botContext.getBotUserId(), sectionDTO, getClass());
 
         return Decision.moveTo(SelectItemState.class);
     }

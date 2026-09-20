@@ -33,7 +33,7 @@ public final class AssignmentOverviewState implements State {
         AssignmentDTO assignmentDTO = null;
 
         try {
-            assignmentDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), AssignmentDTO.class);
+            assignmentDTO = sessionDataService.findByBotUserId(botContext.getBotUserId(), AssignmentDTO.class);
         } catch (Exception e) {
             botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.");
 

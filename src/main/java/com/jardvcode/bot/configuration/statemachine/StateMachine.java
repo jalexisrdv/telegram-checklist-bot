@@ -44,6 +44,7 @@ public final class StateMachine {
 
 		botContext.setPreviousState(botUser.previousStateClass());
 		botContext.setSystemUserId(botUser.getUserId());
+		botContext.setBotUserId(botUser.getId());
 
 		if(botUser.isErpUserLinked() && message.contains(BotCommand.ASSIGNMENTS.value())) {
 			botSessionDataService.deleteByBotUserId(botUser.getUserId());

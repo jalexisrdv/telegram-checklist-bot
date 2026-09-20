@@ -56,13 +56,13 @@ public final class AssignmentOverviewStateTest {
         ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<List> actionCaptor = ArgumentCaptor.forClass(List.class);
 
-        Long mechanicUserId = 1L;
+        Long botUserId = 1L;
         AssignmentDTO dto = AssignmentDTOMother.create();
         AssignmentOverview assignmentOverview = AssignmentOverviewMother.create();
         MessageAction expectedAction= new MessageAction("Continuar", "continue");
 
-        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenReturn(dto);
+        when(botContext.getBotUserId()).thenReturn(botUserId);
+        when(sessionDataService.findByBotUserId(botUserId, AssignmentDTO.class)).thenReturn(dto);
         when(service.getOverview(dto.assignmentId())).thenReturn(assignmentOverview);
 
         state.onBotMessage(botContext);
