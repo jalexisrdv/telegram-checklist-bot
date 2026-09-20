@@ -16,7 +16,7 @@ public final class WelcomeState implements State {
                 
                 📋 /a – Ver y seleccionar una inspección asignada\s
                 📂 /s – Ver secciones e ingresar a responder los puntos de la inspección seleccionada\s
-                📄 /o – Ver el avance y resumen de la inspección seleccionada\s
+                📄 /r – Ver el avance y resumen de la inspección seleccionada\s
                 
                 ¡Presiona o escribe /a para elegir tu inspección y comenzar! 🚗🔧
                 """;
