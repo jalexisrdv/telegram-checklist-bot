@@ -24,7 +24,7 @@ public final class SelectAssignmentState implements State {
 
     @Override
     public void onBotMessage(BotContext botContext) throws Exception {
-        List<AssignmentViewEntity> assignments = assignmentService.findUnconfirmedByMechanicUserId(botContext.getSystemUserId());
+        List<AssignmentViewEntity> assignments = assignmentService.findUnApprovedByMechanicUserId(botContext.getSystemUserId());
 
         if(assignments.isEmpty()) {
             botContext.sendText("¡Genial! No hay listas de inspección pendientes por responder.");

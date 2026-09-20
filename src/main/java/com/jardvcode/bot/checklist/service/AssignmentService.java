@@ -22,9 +22,9 @@ public final class AssignmentService {
         this.repository = repository;
     }
 
-    public List<AssignmentViewEntity> findUnconfirmedByMechanicUserId(Long mechanicUserId) {
+    public List<AssignmentViewEntity> findUnApprovedByMechanicUserId(Long mechanicUserId) {
         try {
-            return repository.findByMechanicUserIdAndStatusNotOrderByDateDesc(mechanicUserId, StatusEnum.CONFIRMED);
+            return repository.findByMechanicUserIdAndStatusNotOrderByDateDesc(mechanicUserId, StatusEnum.APPROVED);
         } catch (Exception e) {
             LOGGER.error("Unexpected error while retrieving assignments for mechanicUserId={}", mechanicUserId, e);
             throw new UnexpectedException();

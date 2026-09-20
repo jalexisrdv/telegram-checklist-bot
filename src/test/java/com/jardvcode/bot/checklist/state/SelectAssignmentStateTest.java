@@ -43,7 +43,7 @@ class SelectAssignmentStateTest {
         Long mechanicUserId = 1L;
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(assignmentService.findUnconfirmedByMechanicUserId(mechanicUserId)).thenReturn(List.of());
+        when(assignmentService.findUnApprovedByMechanicUserId(mechanicUserId)).thenReturn(List.of());
         state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());
@@ -57,7 +57,7 @@ class SelectAssignmentStateTest {
         ArrayList<AssignmentViewEntity> assignments = AssignmentViewEntityMother.values();
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
-        when(assignmentService.findUnconfirmedByMechanicUserId(mechanicUserId)).thenReturn(assignments);
+        when(assignmentService.findUnApprovedByMechanicUserId(mechanicUserId)).thenReturn(assignments);
         state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());

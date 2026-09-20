@@ -14,7 +14,7 @@ SELECT
     date,
     status,
     CASE
-        WHEN status <> 'CONFIRMADO' THEN
+        WHEN status <> 'APPROVED' THEN
             ROW_NUMBER() OVER (
                 PARTITION BY mechanic_user_id
                 ORDER BY id
